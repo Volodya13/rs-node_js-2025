@@ -6,6 +6,8 @@ import { handleCd, handleLs, handleUp } from './navigation.js';
 import { handleCat, handleAdd, handleMkdir, handleRename, handleMove, handleRemove } from './fileOperations.js';
 import { printEOL, printCPUs, printHomeDir, printSystemUsername, printArchitecture } from './os.js';
 import { handleHash } from './hashCalculation.js';
+import { handleCompress } from './compress.js';
+import { handleDecompress } from './decompress.js';
 
 const arg = process.argv.find(arg => arg.startsWith('--username='));
 const username = arg ? arg.split('=')[1] : null;
@@ -94,6 +96,14 @@ rl.on('line', async (line) => {
       case 'hash':
         if (args.length === 0) throw new Error('Missing file path');
         await handleHash(args.join(' '));
+        break;
+      case 'compress':
+        if (args.length < 2) throw new Error('Missing arguments');
+        await handleCompress(args[0], args[1]);
+        break;
+      case 'decompress':
+        if (args.length < 2) throw new Error('Missing arguments');
+        await handleDecompress(args[0], args[1]);
         break;
       default:
         console.log('Invalid input!');
