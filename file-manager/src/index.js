@@ -3,6 +3,7 @@ import readline from 'readline';
 import os from 'os';
 import { chdir } from 'process';
 import { handleCd, handleLs, handleUp } from './navigation.js';
+import { handleCat, handleAdd, handleMkdir, handleRename, handleMove, handleRemove } from './fileOperations.js';
 
 const arg = process.argv.find(arg => arg.startsWith('--username='));
 const username = arg ? arg.split('=')[1] : null;
@@ -37,6 +38,34 @@ rl.on('line', async (line) => {
       case 'ls':
         handleLs();
         break;
+      case 'cat':
+        if (args.length === 0) throw new Error('Missing path');
+        await handleCat(args.join(' '));
+        break;
+      case 'add':
+        if (args.length === 0) throw new Error('Missing path');
+        handleAdd(args.join(' '));
+        break;
+      case 'mkdir':
+        if (args.length === 0) throw new Error('Missing path');
+        handleMkdir(args.join(' '));
+        break;
+      case 'rn':
+        if (args.length < 2) throw new Error('Missing arguments');
+        handleRename(args[0], args[1]);
+        break;
+      case 'cp':
+        if (args.length < 2) throw new Error('Missing arguments');
+        handleRename(args[0], args[1]);
+        break;
+      case 'mv':
+        if (args.length < 2) throw new Error('Missing arguments');
+        handleMove(args[0], args[1]);
+        break;
+      case 'rm':
+        if (args.length === 0) throw new Error('Missing path');
+        handleRemove(args.join(' '));
+        break;
       default:
         console.log('Invalid input!');
     }
@@ -46,7 +75,6 @@ rl.on('line', async (line) => {
   }
 
   printCwd();
-  // rl.prompt();
 })
 
 process.on('SIGINT', () => exitApp());
