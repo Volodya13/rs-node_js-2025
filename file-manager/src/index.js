@@ -5,6 +5,7 @@ import { chdir } from 'process';
 import { handleCd, handleLs, handleUp } from './navigation.js';
 import { handleCat, handleAdd, handleMkdir, handleRename, handleMove, handleRemove } from './fileOperations.js';
 import { printEOL, printCPUs, printHomeDir, printSystemUsername, printArchitecture } from './os.js';
+import { handleHash } from './hashCalculation.js';
 
 const arg = process.argv.find(arg => arg.startsWith('--username='));
 const username = arg ? arg.split('=')[1] : null;
@@ -67,29 +68,33 @@ rl.on('line', async (line) => {
         if (args.length === 0) throw new Error('Missing path');
         handleRemove(args.join(' '));
         break;
-        case 'os':
-          if (args.length === 0) throw new Error('Missing OS flag');
+      case 'os':
+        if (args.length === 0) throw new Error('Missing OS flag');
 
-          switch (args[0]) {
-            case '--EOL':
-              printEOL();
-              break;
-            case '--cpus':
-              printCPUs();
-              break;
-            case '--homedir':
-              printHomeDir();
-              break;
-            case '--username':
-              printSystemUsername();
-              break;
-            case '--architecture':
-              printArchitecture();
-              break;
-            default:
-              throw new Error('Invalid OS flag');
-          }
-          break;
+        switch (args[0]) {
+          case '--EOL':
+            printEOL();
+            break;
+          case '--cpus':
+            printCPUs();
+            break;
+          case '--homedir':
+            printHomeDir();
+            break;
+          case '--username':
+            printSystemUsername();
+            break;
+          case '--architecture':
+            printArchitecture();
+            break;
+          default:
+            throw new Error('Invalid OS flag');
+        }
+        break;
+      case 'hash':
+        if (args.length === 0) throw new Error('Missing file path');
+        await handleHash(args.join(' '));
+        break;
       default:
         console.log('Invalid input!');
     }
