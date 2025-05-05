@@ -4,10 +4,10 @@
   "description": "course task File Manager",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node src/index.js"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "module"
+  "license": "ISC"
 }
