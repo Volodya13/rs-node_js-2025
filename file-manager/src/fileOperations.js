@@ -3,10 +3,10 @@ import path from 'path';
 
 export function handleCat(filePath) {
 
-const absolutePath = path.isAbsolute(filePath)
-  ? filePath
-  : path.resolve(process.cwd(), filePath);
-
+	const absolutePath = path.isAbsolute(filePath)
+	  ? filePath
+	  : path.resolve(process.cwd(), filePath);
+	
   return new Promise((res, rej) => {
     const stream = fs.createReadStream(absolutePath, {
       encoding: 'utf-8'
