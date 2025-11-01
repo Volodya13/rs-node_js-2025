@@ -3,7 +3,15 @@ import readline from 'readline';
 import os from 'os';
 import { chdir } from 'process';
 import { handleCd, handleLs, handleUp } from './navigation.js';
-import { handleCat, handleAdd, handleMkdir, handleRename, handleMove, handleRemove } from './fileOperations.js';
+import {
+	handleCat,
+	handleAdd,
+	handleMkdir,
+	handleRename,
+	handleMove,
+	handleRemove,
+	handleCopy
+} from './fileOperations.js';
 import { printEOL, printCPUs, printHomeDir, printSystemUsername, printArchitecture } from './os.js';
 import { handleHash } from './hashCalculation.js';
 import { handleCompress } from './compress.js';
@@ -60,11 +68,11 @@ rl.on('line', async (line) => {
         break;
       case 'cp':
         if (args.length < 2) throw new Error('Missing arguments');
-        handleRename(args[0], args[1]);
+        await handleCopy(args[0], args[1]);
         break;
       case 'mv':
         if (args.length < 2) throw new Error('Missing arguments');
-        handleMove(args[0], args[1]);
+        await handleMove(args[0], args[1]);
         break;
       case 'rm':
         if (args.length === 0) throw new Error('Missing path');
@@ -110,7 +118,6 @@ rl.on('line', async (line) => {
     }
   } catch(error) {
     console.log('Operation failed');
-    throw new Error(error);
   }
 
   printCwd();
