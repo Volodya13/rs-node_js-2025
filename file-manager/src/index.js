@@ -16,7 +16,10 @@ import { handleCompress } from './compress.js';
 import { handleDecompress } from './decompress.js';
 
 const arg = process.argv.find(arg => arg.startsWith('--username='));
-const username = arg ? arg.split('=')[1] : null;
+const username =
+	(arg && arg.split('=')[1]) ??
+	process.env.npm_config_username ??
+	null;
 
 const rl = readline.createInterface({
   input: process.stdin,
