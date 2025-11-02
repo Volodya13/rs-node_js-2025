@@ -18,7 +18,7 @@ export function handleCat(filePath) {
 
     stream.pipe(process.stdout);
 
-    stream.on('end', () => {
+    stream.on('close', () => {
       res();
     });
   })
@@ -46,7 +46,7 @@ export function handleMkdir(dirName) {
 
 export function handleRename(oldPath, newFileName) {
   const oldFullPathName = path.isAbsolute(oldPath)
-    ? prevPath
+    ? oldPath
     : path.resolve(process.cwd(), oldPath);
 
     const dir = path.dirname(oldFullPathName);
@@ -68,10 +68,6 @@ export function handleCopy(src, dest) {
     ? dest
     : path.resolve(process.cwd(), dest);
 
-  if (!fs.existsSync(srcPath)) {
-    throw new Error('Invalid paths');
-  }
-
   if (!fs.existsSync(srcPath) || !fs.existsSync(destPath)) {
     throw new Error('Invalid paths');
   }
@@ -83,9 +79,9 @@ export function handleCopy(src, dest) {
     const readStream = fs.createReadStream(srcPath);
     const writeStream = fs.createWriteStream(destDirPath);
 
-    readStream.on('error', rej);
-    writeStream.on('error', rej);
-    writeStream.on('close', res);
+    readStream.on('error', (error) => rej(error));
+    writeStream.on('error', (error) => rej(error));
+    writeStream.on('finish', res);
 
     readStream.pipe(writeStream);
   });
@@ -101,17 +97,13 @@ export async function handleMove(src, dest) {
 }
 
 export function handleRemove(filePath) {
-  const absolutePath = path.isAbsolute(filePath)
+  const fullPath = path.isAbsolute(filePath)
     ? filePath
     : path.resolve(process.cwd(), filePath);
 
-  if (!fs.existsSync(absolutePath || !fs.lstatSync)) {
-    throw new Error('File does not exist');
+  if (!fs.existsSync(fullPath)) {
+    throw new Error('File not found');
   }
 
-  fs.unlink(absolutePath, (err) => {
-    if (err) {
-      throw new Error('Operation failed');
-    }
-  });
+  fs.unlinkSync(fullPath);
 }
