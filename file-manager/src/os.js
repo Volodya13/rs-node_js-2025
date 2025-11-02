@@ -13,7 +13,7 @@ export function printCPUs() {
 }
 
 export function printHomeDir() {
-  console.log(os.homedir());
+  console.log(`Home directory: ${os.homedir()}`);
 }
 
 export function printSystemUsername() {
