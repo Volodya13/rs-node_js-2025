@@ -14,12 +14,12 @@ export function handleCompress(src, dest) {
     const compressStream = createBrotliCompress();
     const writeStream = fs.createWriteStream(destFile);
 
-    readStream.on('error', () => rej);
-    writeStream.on('error', () => rej);
-    writeStream.on('finish', () => res);
+    readStream.on('error', (error) => rej(error));
+    writeStream.on('error', (error) => rej(error));
+    writeStream.on('finish', res);
 
     readStream
       .pipe(compressStream)
-      .pipe(writeStream)
-  })
+      .pipe(writeStream);
+  });
 }
