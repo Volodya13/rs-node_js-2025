@@ -1,18 +1,22 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { usersController } from './users/users.controller';
+import { handleNotFound } from './utils/errors';
 
 class Router {
   async handle(req: IncomingMessage, res: ServerResponse) {
     const { method, url } = req;
 
     if (!url || !method) {
-      return console.log('Invalid request');
+      handleNotFound(res, 'Invalid request');
+      return;
     }
 
     if (url.startsWith('/api/users')) {
-      return console.log(`Handling users route with method: ${method}`);
+      await usersController.handleRequest(req, res);
+      return;
     }
 
-    return console.log(res, 'Route not found');
+    handleNotFound(res, 'Endpoint not found');
   }
 }
 
