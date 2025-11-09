@@ -27,6 +27,7 @@ export const handleError = (response: ServerResponse, error: unknown) => {
       'Content-Type': 'application/json',
     });
     response.end(JSON.stringify({ error: error.message }));
+    return;
   }
 
   response.writeHead(500, { 'Content-Type': 'application/json' });
