@@ -6,3 +6,4 @@ export interface User {
 }
 
 export type CreateUserDto = Omit<User, 'id'>;
+

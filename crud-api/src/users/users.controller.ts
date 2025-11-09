@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { BadRequestError, NotFoundError } from '../utils/errors';
 import { usersService } from './users.service';
-import { isUuid, parseBody } from '../utils/helpers.';
+import { isUuid, parseBody } from '../utils/helpers';
 
 class UsersController {
   async handleRequest(req: IncomingMessage, res: ServerResponse) {
@@ -63,7 +63,7 @@ class UsersController {
     if (!body || typeof body !== 'object')
       throw new BadRequestError('Invalid body');
 
-    const { username, age, hobbies } = body as  Record<string, unknown>;
+    const { username, age, hobbies } = body as Record<string, unknown>;
 
     if (
       typeof username !== 'string' ||
