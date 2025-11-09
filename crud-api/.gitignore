@@ -14,3 +14,10 @@ pnpm-error.log*
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# IDE
+.vscode/
+.idea/
