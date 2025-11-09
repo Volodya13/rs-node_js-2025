@@ -1,0 +1,24 @@
+# Node.js
+node_modules/
+
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+
+# dotenv environment variable files
+.env
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# IDE
+.vscode/
+.idea/
+/dist/**
