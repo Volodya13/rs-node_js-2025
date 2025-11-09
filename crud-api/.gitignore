@@ -21,3 +21,4 @@ pnpm-error.log*
 # IDE
 .vscode/
 .idea/
+/dist/**

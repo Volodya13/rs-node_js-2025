@@ -6,6 +6,9 @@
   "scripts": {
     "start": "npm run start:prod",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start:prod": "npm run build && node dist/src/index.js",
+    "start:multi": "npm run build && node dist/src/cluster.js",
     "lint": "eslint src --ext .ts",
     "test": "jest",
     "format": "prettier --write ."
